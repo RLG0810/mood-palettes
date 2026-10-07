@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mood Palette — Generador de paletas por estado de ánimo</title>
+<meta name="description" content="Widget de escritorio retro pixel art que genera paletas de colores según tu mood.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky">
+    <div class="pixel-sun"></div>
+    <div class="pixel-cloud c1"></div>
+    <div class="pixel-cloud c2"></div>
+  </div>
+
+  <main class="widget" role="application" aria-label="Generador de paletas por mood">
+    <div class="titlebar">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <span class="title">MOOD_PALETTE.EXE</span>
+    </div>
+
+    <div class="body">
+      <h1>Mood Palette Generator</h1>
+      <p class="subtitle">Elige tu mood y genera una paleta ✦</p>
+
+      <div class="moods" id="moods">
+        <button class="mood selected" data-mood="feliz" aria-pressed="true">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><g shape-rendering="crispEdges">
+            <rect x="7" y="0" width="2" height="2" fill="#e8a13c"></rect><rect x="7" y="14" width="2" height="2" fill="#e8a13c"></rect>
+            <rect x="0" y="7" width="2" height="2" fill="#e8a13c"></rect><rect x="14" y="7" width="2" height="2" fill="#e8a13c"></rect>
+            <rect x="2" y="2" width="2" height="2" fill="#e8a13c"></rect><rect x="12" y="2" width="2" height="2" fill="#e8a13c"></rect>
+            <rect x="2" y="12" width="2" height="2" fill="#e8a13c"></rect><rect x="12" y="12" width="2" height="2" fill="#e8a13c"></rect>
+            <rect x="4" y="4" width="8" height="8" fill="#f9d976"></rect><rect x="5" y="5" width="3" height="3" fill="#fff3c4"></rect>
+          </g></svg>
+          <span class="label">Feliz</span>
+        </button>
+        <button class="mood" data-mood="melancolico" aria-pressed="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><g shape-rendering="crispEdges">
+            <rect x="4" y="1" width="8" height="2" fill="#8f7fb8"></rect><rect x="2" y="3" width="10" height="2" fill="#8f7fb8"></rect>
+            <rect x="1" y="5" width="10" height="6" fill="#8f7fb8"></rect><rect x="3" y="11" width="8" height="2" fill="#8f7fb8"></rect>
+            <rect x="5" y="13" width="6" height="2" fill="#8f7fb8"></rect>
+            <rect x="4" y="3" width="8" height="2" fill="#cdb3e0"></rect><rect x="3" y="5" width="8" height="4" fill="#cdb3e0"></rect>
+            <rect x="10" y="2" width="1" height="1" fill="#fff"></rect><rect x="13" y="5" width="1" height="1" fill="#fff"></rect>
+          </g></svg>
+          <span class="label">Melancólico</span>
+        </button>
+        <button class="mood" data-mood="energico" aria-pressed="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><g shape-rendering="crispEdges">
+            <rect x="8" y="0" width="4" height="2" fill="#f2876d"></rect><rect x="6" y="2" width="4" height="2" fill="#f2876d"></rect>
+            <rect x="6" y="4" width="6" height="2" fill="#f2876d"></rect><rect x="4" y="6" width="6" height="2" fill="#f2876d"></rect>
+            <rect x="6" y="8" width="6" height="2" fill="#f2876d"></rect><rect x="4" y="10" width="4" height="2" fill="#f2876d"></rect>
+            <rect x="2" y="12" width="4" height="2" fill="#f2876d"></rect><rect x="2" y="14" width="2" height="2" fill="#f2876d"></rect>
+            <rect x="7" y="2" width="2" height="6" fill="#f9d976"></rect>
+          </g></svg>
+          <span class="label">Enérgico</span>
+        </button>
+        <button class="mood" data-mood="relajado" aria-pressed="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><g shape-rendering="crispEdges">
+            <rect x="3" y="5" width="4" height="2" fill="#a8c4d9"></rect><rect x="9" y="4" width="4" height="2" fill="#a8c4d9"></rect>
+            <rect x="2" y="7" width="12" height="2" fill="#a8c4d9"></rect><rect x="1" y="9" width="14" height="3" fill="#a8c4d9"></rect>
+            <rect x="3" y="6" width="10" height="2" fill="#dceaf3"></rect><rect x="2" y="8" width="12" height="2" fill="#dceaf3"></rect>
+            <rect x="4" y="13" width="2" height="2" fill="#b8d0e0"></rect><rect x="10" y="13" width="2" height="2" fill="#b8d0e0"></rect>
+          </g></svg>
+          <span class="label">Relajado</span>
+        </button>
+      </div>
+
+      <button class="generate" id="generate">✦ GENERAR PALETA ✦</button>
+
+      <div class="loading" id="loading" aria-live="polite">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><g shape-rendering="crispEdges">
+          <rect x="7" y="0" width="2" height="4" fill="#f2876d"></rect><rect x="7" y="12" width="2" height="4" fill="#f2876d"></rect>
+          <rect x="0" y="7" width="4" height="2" fill="#f2876d"></rect><rect x="12" y="7" width="4" height="2" fill="#f2876d"></rect>
+          <rect x="2" y="2" width="3" height="3" fill="#f9d976"></rect><rect x="11" y="2" width="3" height="3" fill="#f9d976"></rect>
+          <rect x="2" y="11" width="3" height="3" fill="#f9d976"></rect><rect x="11" y="11" width="3" height="3" fill="#f9d976"></rect>
+          <rect x="6" y="6" width="4" height="4" fill="#cdb3e0"></rect>
+        </g></svg>
+        <span>Generando paleta<span class="dots"></span></span>
+      </div>
+
+      <div class="result" id="result">
+        <div class="palette" id="palette"></div>
+        <div class="result-footer">
+          <span class="hint">clic en un color = copiar HEX</span>
+          <button class="regen" id="regen">↻ REGENERAR</button>
+        </div>
+      </div>
+
+      <div class="source-row">
+        <button class="source-btn" id="sourceBtn">&lt;/&gt; VER CÓDIGO FUENTE</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="copied" id="copied">Error al copiar</div>
+
+  <!-- Modal de código fuente -->
+  <div class="modal-overlay" id="sourceModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-titlebar">
+        <span class="modal-title" id="modalTitle">SOURCE_CODE.TXT</span>
+        <button class="modal-close" id="modalCloseX" aria-label="Cerrar">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-label">Código fuente completo del widget. Copialo o descargalo como archivo .html</p>
+        <textarea class="code-area" id="codeArea" readonly="" aria-label="Código fuente"></textarea>
+        <div class="modal-actions">
+          <button class="close-btn" id="modalClose">CERRAR</button>
+          <button class="download-btn" id="downloadBtn">⬇ DESCARGAR .HTML</button>
+          <button class="copy-btn" id="copyCodeBtn">✄ COPIAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
